@@ -23,6 +23,7 @@
     <!-- Tabs -->
     <string name="tab_gpsfix">GPS定位</string>
     <string name="tab_track">轨迹</string>
+    <string name="tab_maps">Maps</string>
     <string name="tab_tracklist">轨迹列表</string>
     <!-- GPS Fix -->
     <string name="latitude">纬度</string>

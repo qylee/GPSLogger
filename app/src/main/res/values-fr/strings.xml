@@ -23,6 +23,7 @@
     <!-- Tabs -->
     <string name="tab_gpsfix">Pos GPS</string>
     <string name="tab_track">Tracé</string>
+    <string name="tab_maps">Maps</string>
     <string name="tab_tracklist">Archives</string>
     <!-- GPS Fix -->
     <string name="latitude">Latitude</string>

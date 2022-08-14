@@ -23,6 +23,7 @@
     <!-- Tabs -->
     <string name="tab_gpsfix">GPS Fix</string>
     <string name="tab_track">Ίχνος</string>
+    <string name="tab_maps">Maps</string>
     <string name="tab_tracklist">Ίχνη</string>
     <!-- GPS Fix -->
     <string name="latitude">Γεωγρ. Πλάτος</string>
