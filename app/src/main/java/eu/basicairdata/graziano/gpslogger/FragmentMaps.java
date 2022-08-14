@@ -4,10 +4,14 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import android.content.res.Configuration;
+import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
+import android.widget.FrameLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -16,7 +20,13 @@ import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+import org.greenrobot.eventbus.ThreadMode;
+
 public class FragmentMaps extends Fragment {
+    final GPSApplication gpsApp = GPSApplication.getInstance();
+    private Track track;
 
     private OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -42,7 +52,39 @@ public class FragmentMaps extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater,
                              @Nullable ViewGroup container,
                              @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_maps, container, false);
+
+        // Inflate the layout for this fragment
+        View view = inflater.inflate(R.layout.fragment_maps, container, false);
+
+        return view;
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        if (!EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().register(this);
+        }
+
+        update();
+    }
+
+    @Override
+    public void onPause() {
+        if (EventBus.getDefault().isRegistered(this)) {
+            EventBus.getDefault().unregister(this);
+        }
+        super.onPause();
+    }
+
+    /**
+     * The EventBus receiver for Short Messages.
+     */
+    @Subscribe(threadMode = ThreadMode.MAIN)
+    public void onEvent(Short msg) {
+        if (msg == EventBusMSG.UPDATE_TRACK) {
+            update();
+        }
     }
 
     @Override
@@ -53,5 +95,14 @@ public class FragmentMaps extends Fragment {
         if (mapFragment != null) {
             mapFragment.getMapAsync(callback);
         }
+    }
+
+    /**
+     * Updates the user interface of the fragment.
+     * It takes care of visibility and value of each tile, and Track Status widgets.
+     */
+    public void update() {
+        track = gpsApp.getCurrentTrack();
+
     }
 }
