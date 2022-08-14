@@ -20,6 +20,7 @@
  */
 
 apply plugin: 'com.android.application'
+apply plugin: 'com.google.android.libraries.mapsplatform.secrets-gradle-plugin'
 
 android {
     compileSdkVersion 32
@@ -28,7 +29,7 @@ android {
 
     defaultConfig {
         applicationId "eu.basicairdata.graziano.gpslogger"
-        minSdkVersion 14
+        minSdkVersion 27
         targetSdkVersion 32
 
         // -----------------------------------------------------------------------------------------
@@ -71,6 +72,7 @@ android {
 
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation 'com.google.android.gms:play-services-maps:17.0.1'
     testImplementation 'junit:junit:4.13.2'
 
     implementation 'androidx.appcompat:appcompat:1.4.2'
