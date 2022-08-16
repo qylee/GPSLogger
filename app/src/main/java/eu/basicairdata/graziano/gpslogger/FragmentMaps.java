@@ -4,21 +4,18 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
-import android.content.res.Configuration;
-import android.os.Build;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
-import android.widget.FrameLayout;
+import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -26,9 +23,12 @@ import org.greenrobot.eventbus.ThreadMode;
 
 public class FragmentMaps extends Fragment {
     final GPSApplication gpsApp = GPSApplication.getInstance();
-    private Track track;
+    private GoogleMap googleMap;
+    private final LatLng cityHallAnsan = new LatLng(37.3218, 126.8309);
+    private final float defaultZoomLevel = 15.0f;
+    private LatLng lastPos = cityHallAnsan;
 
-    private OnMapReadyCallback callback = new OnMapReadyCallback() {
+    private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
         /**
          * Manipulates the map once available.
@@ -40,10 +40,11 @@ public class FragmentMaps extends Fragment {
          * user has installed Google Play services and returned to the app.
          */
         @Override
-        public void onMapReady(GoogleMap googleMap) {
-            LatLng sydney = new LatLng(-34, 151);
-            googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-            googleMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
+        public void onMapReady(@NonNull GoogleMap map) {
+            googleMap = map;
+            UiSettings mapUiSettings = googleMap.getUiSettings();
+            mapUiSettings.setZoomControlsEnabled(true);
+            update();
         }
     };
 
@@ -54,9 +55,7 @@ public class FragmentMaps extends Fragment {
                              @Nullable Bundle savedInstanceState) {
 
         // Inflate the layout for this fragment
-        View view = inflater.inflate(R.layout.fragment_maps, container, false);
-
-        return view;
+        return inflater.inflate(R.layout.fragment_maps, container, false);
     }
 
     @Override
@@ -102,7 +101,13 @@ public class FragmentMaps extends Fragment {
      * It takes care of visibility and value of each tile, and Track Status widgets.
      */
     public void update() {
-        track = gpsApp.getCurrentTrack();
-
+        Track track = gpsApp.getCurrentTrack();
+        if (track.getLatitudeEnd() != GPSApplication.NOT_AVAILABLE && track.getLongitudeEnd() != GPSApplication.NOT_AVAILABLE) {
+            lastPos = new LatLng(track.getLatitudeEnd(), track.getLongitudeEnd());
+        }
+        if (googleMap != null) {
+            googleMap.moveCamera(CameraUpdateFactory.zoomTo(defaultZoomLevel));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLng(lastPos));
+        }
     }
 }
