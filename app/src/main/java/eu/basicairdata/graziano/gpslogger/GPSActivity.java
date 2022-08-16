@@ -75,11 +75,12 @@ import static eu.basicairdata.graziano.gpslogger.GPSApplication.TOAST_VERTICAL_O
  * The tabbed interface contains the 3 following Fragments:
  * <ul>
  *     <li>Page 1 = FragmentGPSFix: it shows the status of the GPS and the FIX</li>
- *     <li>Page 2 = FragmentTrack: it shows the statistics of the current Track</li>
- *     <li>Page 3 = FragmentTracklist: it lists the archive of the recorded tracks</li>
+ *     <li>Page 2 = FragmentMaps: it shows the map of the current Track</li>
+ *     <li>Page 3 = FragmentTrack: it shows the statistics of the current Track</li>
+ *     <li>Page 4 = FragmentTracklist: it lists the archive of the recorded tracks</li>
  * </ul>
  * The Activity is driven by a bottom bar (FragmentRecordingControls),
- * that is visible on the first 2 pages, and can host an Action-mode Toolbar
+ * that is visible on the first 3 pages, and can host an Action-mode Toolbar
  * on top of the third page (ToolbarActionMode).
  */
 public class GPSActivity extends AppCompatActivity {
@@ -503,7 +504,7 @@ public class GPSActivity extends AppCompatActivity {
      */
     private void updateBottomSheetPosition() {
         gpsApp.setGPSActivityActiveTab(tabLayout.getSelectedTabPosition());
-        if (gpsApp.getGPSActivityActiveTab() != 2) {
+        if (gpsApp.getGPSActivityActiveTab() != 3) {
             bottomSheetBehavior.setPeekHeight(1);
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_EXPANDED);
             //Log.w("myApp", "[#] GPSActivity.java - mBottomSheetBehavior.setPeekHeight(" + bottomSheet.getHeight() +");");
@@ -521,6 +522,7 @@ public class GPSActivity extends AppCompatActivity {
         ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
         adapter.addFragment(new FragmentGPSFix(), getString(R.string.tab_gpsfix));
         adapter.addFragment(new FragmentMaps(), getString(R.string.tab_maps));
+        adapter.addFragment(new FragmentTrack(), getString(R.string.tab_track));
         adapter.addFragment(new FragmentTracklist(), getString(R.string.tab_tracklist));
         viewPager.setAdapter(adapter);
     }
@@ -632,7 +634,7 @@ public class GPSActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if ((gpsApp.getNumberOfSelectedTracks() > 0) && (gpsApp.getGPSActivityActiveTab()  == 2)) {
+                if ((gpsApp.getNumberOfSelectedTracks() > 0) && (gpsApp.getGPSActivityActiveTab()  == 3)) {
                     if (actionMode == null) actionMode = (startSupportActionMode(new ToolbarActionMode()));
                     if (actionMode != null) actionMode.setTitle(gpsApp.getNumberOfSelectedTracks() > 1 ? String.valueOf(gpsApp.getNumberOfSelectedTracks()) : "");
                 } else if (actionMode != null) {
