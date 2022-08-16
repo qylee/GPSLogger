@@ -2,6 +2,8 @@
 A GPS logger for Android mobile devices.<br>
 Offered by [BasicAirData](https://www.basicairdata.eu) - Open and free DIY air data instrumentation and telemetry 
 
+<i><b>This repository is forked from [BasicAirData/GPSLogger](https://github.com/BasicAirData/GPSLogger).</b></i>
+
 ![alt tag](https://github.com/BasicAirData/GPSLogger/blob/master/screenshots/Image_01.png)
 
 ## Description
