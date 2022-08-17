@@ -141,7 +141,7 @@
     <string name="export_unable_to_write_file">파일을 내보낼 수 없습니다.</string>
 
     <!-- Notification App killed messagebox -->
-    <string name="dlg_app_killed">백그라운드 트랙킹 기록 중에 종료될 수 있습니다.</string>
+    <string name="dlg_app_killed">백그라운드 트랙킹 기록 중에 앱이 종료되었습니다.</string>
     <string name="dlg_app_killed_description">환경설정에서 배터리 최적화되지 않도록 설정해 주세요.</string>
     <string name="open_android_app_settings">환경설정 열기</string>
 
@@ -185,7 +185,7 @@
     <string name="pref_category_altitude_corrections">고도 보정</string>
     <string name="pref_EGM96AltitudeCorrection">EGM96 보정</string>
     <string name="pref_EGM96AltitudeCorrection_summary">NGA 지오이드 모델로 자동 고도보정</string>
-    <string name="pref_EGM96AltitudeCorrection_download_progress">파일 다운로드(2028kB):\nEGM96 지오이도 높이..</string>
+    <string name="pref_EGM96AltitudeCorrection_download_progress">파일 다운로드(2028kB):\nEGM96 지오이도 높이.</string>
     <string name="pref_AltitudeCorrection">수동 보정</string>
     <string name="pref_AltitudeCorrection_summary_not_defined">정의된 오프셋 없음</string>
 

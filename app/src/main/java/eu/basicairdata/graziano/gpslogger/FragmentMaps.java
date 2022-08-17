@@ -2,9 +2,13 @@ package eu.basicairdata.graziano.gpslogger;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.core.app.ActivityCompat;
 import androidx.fragment.app.Fragment;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -26,6 +30,7 @@ public class FragmentMaps extends Fragment {
     private GoogleMap googleMap;
     private final LatLng cityHallAnsan = new LatLng(37.3218, 126.8309);
     private final float defaultZoomLevel = 15.0f;
+    private final float recordingZoomLevel = 19.0f;
     private LatLng lastPos = cityHallAnsan;
 
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
@@ -44,7 +49,15 @@ public class FragmentMaps extends Fragment {
             googleMap = map;
             UiSettings mapUiSettings = googleMap.getUiSettings();
             mapUiSettings.setZoomControlsEnabled(true);
-            update();
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(cityHallAnsan, defaultZoomLevel));
+
+            GPSActivity gpsActivity = (GPSActivity) getActivity();
+            if (ActivityCompat.checkSelfPermission(gpsActivity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED || ActivityCompat.checkSelfPermission(gpsActivity, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+                googleMap.setMyLocationEnabled(true);
+                mapUiSettings.setMyLocationButtonEnabled(true);
+            } else {
+                gpsActivity.checkLocationPermission();
+            }
         }
     };
 
@@ -102,12 +115,11 @@ public class FragmentMaps extends Fragment {
      */
     public void update() {
         Track track = gpsApp.getCurrentTrack();
-        if (track.getLatitudeEnd() != GPSApplication.NOT_AVAILABLE && track.getLongitudeEnd() != GPSApplication.NOT_AVAILABLE) {
+        if (track.isValid()) {
             lastPos = new LatLng(track.getLatitudeEnd(), track.getLongitudeEnd());
         }
         if (googleMap != null) {
-            googleMap.moveCamera(CameraUpdateFactory.zoomTo(defaultZoomLevel));
-            googleMap.animateCamera(CameraUpdateFactory.newLatLng(lastPos));
+            googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastPos, recordingZoomLevel));
         }
     }
 }

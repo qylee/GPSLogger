@@ -53,7 +53,7 @@ public class Track {
             R.drawable.ic_tracktype_walk_24dp,                  // Track.TRACK_TYPE_WALK     = 1;
             R.drawable.ic_tracktype_mountain_24dp,              // Track.TRACK_TYPE_MOUNTAIN = 2;
             R.drawable.ic_tracktype_run_24dp,                   // Track.TRACK_TYPE_RUN      = 3;
-            R.drawable.ic_tracktype_bike_24dp,                  // Track.TRACK_TYPE_BICYCLE  = 4;
+            R.drawable.ic_tracktype_scooter_24dp,                  // Track.TRACK_TYPE_BICYCLE  = 4;
             R.drawable.ic_tracktype_car_24dp,                   // Track.TRACK_TYPE_CAR      = 5;
             R.drawable.ic_tracktype_flight_24dp                 // Track.TRACK_TYPE_FLIGHT   = 6;
     };
@@ -870,5 +870,12 @@ public class Track {
         if ((altitudeUp != NOT_AVAILABLE) && (altitudeDown != NOT_AVAILABLE))
             if ((altitudeDown + altitudeUp > 5000.0) && (speedMax > 300.0f / 3.6f)) return TRACK_TYPE_FLIGHT;
         return TRACK_TYPE_CAR;
+    }
+
+    public boolean isValid() {
+        if (getLatitudeEnd() == GPSApplication.NOT_AVAILABLE || getLongitudeEnd() == GPSApplication.NOT_AVAILABLE) {
+            return false;
+        }
+        return true;
     }
 }
