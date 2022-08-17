@@ -32,9 +32,19 @@ import static eu.basicairdata.graziano.gpslogger.GPSApplication.NOT_AVAILABLE;
 public class LocationExtended {
     private Location location;
     private String description              = "";
+    private short type                      = 0;
     private double altitudeEGM96Correction  = NOT_AVAILABLE;
     private int numberOfSatellites          = NOT_AVAILABLE;
     private int numberOfSatellitesUsedInFix = NOT_AVAILABLE;
+
+    public final short CHILD_SANCTUARY                  = 1;
+    public final short LEFT_TURN_AT_YOUR_OWN_RISK       = 2;
+    public final short ILLEGAL_PARKING_AREA             = 3;
+    public final short SCHOOL_AREA                      = 4;
+    public final short APARTMENT_ENTRANCE_AREA          = 5;
+    public final short PEDESTRIAN_ROAD                  = 6;
+    public final short SUBWAY_STATION_AREA              = 7;
+    public final short EDGE_HIGH_AREA                   = 8;
 
     /**
      * The constructor.

@@ -71,7 +71,7 @@
 
     <!-- Track -->
     <string name="track_id">트랙</string>
-    <string name="duration">이동시간</string>
+    <string name="duration">기록 시간</string>
     <string name="max_speed">최대 속력</string>
     <string name="average_speed">평균 속력</string>
     <string name="distance">이동거리</string>
@@ -80,12 +80,12 @@
 
     <!-- Track Status message -->
     <string name="track_empty">새 트랙</string>
-    <string name="track_start_with_button_below">하단바 버튼으로\n방문지를 추가하세요.</string>
+    <string name="track_start_with_button_below">하단바 버튼으로\n위험금지구역을 추가하세요.</string>
 
     <!-- Recording buttons (bottom side) -->
     <string name="record">기록</string>
     <string name="pause">일시정지</string>
-    <string name="annotate">방문지 추가</string>
+    <string name="annotate">위험금지구역</string>
     <string name="stop">기록 종료</string>
     <string name="lock">화면 잠금</string>
     <string name="unlock">화면 잠금해제</string>
@@ -94,11 +94,11 @@
     <string name="toast_bottom_bar_locked">하단바 잠김</string>
     <string name="toast_nothing_to_save">저장항목 없음</string>
     <string name="toast_recording_when_gps_found">GPS 신호가 잡히면 트랙을 기록합니다.</string>
-    <string name="toast_annotate_when_gps_found">GPS 신호가 잡히면 방문지를 추가합니다.</string>
+    <string name="toast_annotate_when_gps_found">GPS 신호가 잡히면 위험금지구역을 추가합니다.</string>
 
     <string name="ok">OK</string>
 
-    <string name="annotations">방문 지점</string>
+    <string name="annotations">위험금지구역</string>
     <string name="trackpoints">측위 지점</string>
 
     <!-- Main menu -->
@@ -110,9 +110,9 @@
     <string name="menu_shutdown">종료</string>
 
     <!-- Annotation Creation dialog -->
-    <string name="dlg_add_annotation">방문지 추가</string>
+    <string name="dlg_add_annotation">위험금지구역 추가</string>
     <string name="dlg_enter_the_description">설명을 추가하세요.</string>
-    <string name="dlg_button_add">추가</string>
+    <string name="dlg_button_add">추가하기</string>
 
     <!-- Tracklist -->
     <string name="tracklist_empty">기록된 트랙이 없습니다.</string>
@@ -122,8 +122,8 @@
     <string name="card_trackinfo_altitude_gap">고도차</string>
     <string name="card_trackinfo_max_speed">최대 속력</string>
     <string name="card_trackinfo_average_speed">평균 속력</string>
-    <string name="card_trackinfo_geopoints">기록점</string>
-    <string name="card_trackinfo_annotations">방문지점</string>
+    <string name="card_trackinfo_geopoints">측위점</string>
+    <string name="card_trackinfo_annotations">위험금지구역</string>
 
     <!-- Context menu of Tracklist -->
     <string name="card_menu_export">내보내기</string>
@@ -239,5 +239,15 @@
     <string name="UM_nm">NM</string>
     <string name="UM_kn">kn</string>
     <string name="UM_s">s</string>
+
+    <string name="child_sanctuary">어린이 보호구역</string>
+    <string name="left_turn_at_your_own_risk">비보호 좌회전 교차로</string>
+    <string name="illegal_parking_area">불법주정차 구역</string>
+    <string name="school_area">학교 주변 구역</string>
+    <string name="apartment_entrance_area">아파트 출입구</string>
+    <string name="pedestrian_road">보행자 전용 도로</string>
+    <string name="subway_station_area">지하철역 주변</string>
+    <string name="edge_high_area">보도 단차 지점</string>
+
 
 </resources>

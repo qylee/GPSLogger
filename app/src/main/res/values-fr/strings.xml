@@ -206,4 +206,14 @@
     <string name="UM_nm">NM</string>
     <string name="UM_kn">kn</string>
     <string name="UM_s">s</string>
+
+    <string name="child_sanctuary">Child Sanctuary</string>
+    <string name="left_turn_at_your_own_risk">Left-turn at Your Own Risk</string>
+    <string name="illegal_parking_area">Illegal Parking Area</string>
+    <string name="school_area">School Area</string>
+    <string name="apartment_entrance_area">Apartment Entrance Area</string>
+    <string name="pedestrian_road">Pedestrian Road</string>
+    <string name="subway_station_area">Subway Station Area</string>
+    <string name="edge_high_area">Edge High Area</string>
+
 </resources>
