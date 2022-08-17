@@ -53,7 +53,7 @@ public class Track {
             R.drawable.ic_tracktype_walk_24dp,                  // Track.TRACK_TYPE_WALK     = 1;
             R.drawable.ic_tracktype_mountain_24dp,              // Track.TRACK_TYPE_MOUNTAIN = 2;
             R.drawable.ic_tracktype_run_24dp,                   // Track.TRACK_TYPE_RUN      = 3;
-            R.drawable.ic_tracktype_scooter_24dp,                  // Track.TRACK_TYPE_BICYCLE  = 4;
+            R.drawable.ic_tracktype_scooter_24dp,               // Track.TRACK_TYPE_BICYCLE  = 4;
             R.drawable.ic_tracktype_car_24dp,                   // Track.TRACK_TYPE_CAR      = 5;
             R.drawable.ic_tracktype_flight_24dp                 // Track.TRACK_TYPE_FLIGHT   = 6;
     };
@@ -63,7 +63,7 @@ public class Track {
             "walking",                                          // Track.TRACK_TYPE_WALK     = 1;
             "mountaineering",                                   // Track.TRACK_TYPE_MOUNTAIN = 2;
             "running",                                          // Track.TRACK_TYPE_RUN      = 3;
-            "cycling",                                          // Track.TRACK_TYPE_BICYCLE  = 4;
+            "riding_scooter",                                   // Track.TRACK_TYPE_BICYCLE  = 4;
             "driving_general",                                  // Track.TRACK_TYPE_CAR      = 5;
             "flying"                                            // Track.TRACK_TYPE_FLIGHT   = 6;
     };
