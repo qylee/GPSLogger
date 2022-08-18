@@ -431,10 +431,13 @@ public class GPSActivity extends AppCompatActivity {
     public void onEvent(Short msg) {
         switch (msg) {
             case EventBusMSG.REQUEST_ADD_PLACEMARK:
+                Intent intent = new Intent(this, PlacemarkChoiceActivity.class);
+                startActivity(intent);
+
                 // Shows the Placemark Dialog
-                FragmentManager fm = getSupportFragmentManager();
-                FragmentPlacemarkDialog placemarkDialog = new FragmentPlacemarkDialog();
-                placemarkDialog.show(fm, "");
+//                FragmentManager fm = getSupportFragmentManager();
+//                FragmentPlacemarkDialog placemarkDialog = new FragmentPlacemarkDialog();
+//                placemarkDialog.show(fm, "");
                 break;
             case EventBusMSG.UPDATE_TRACKLIST:
             case EventBusMSG.NOTIFY_TRACKS_DELETED:
@@ -752,6 +755,7 @@ public class GPSActivity extends AppCompatActivity {
                 gpsApp.setStopButtonFlag(true, gpsApp.getCurrentTrack().getNumberOfLocations() + gpsApp.getCurrentTrack().getNumberOfPlacemarks() > 0 ? 1000 : 300);
                 gpsApp.setRecording(false);
                 gpsApp.setPlacemarkRequested(false);
+                EventBus.getDefault().post(EventBusMSG.FINALIZE_TRACK);
                 //Update();
                 if (gpsApp.getCurrentTrack().getNumberOfLocations() + gpsApp.getCurrentTrack().getNumberOfPlacemarks() > 0) {
                     if (showDialog) {

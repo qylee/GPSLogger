@@ -190,6 +190,7 @@ public class GPSApplication extends Application implements LocationListener {
     DatabaseHandler gpsDataBase;                                 // The handler for the GPSLogger Database of Tracks
 
     private String placemarkDescription = "";                    // The description of the Placemark (annotation) set by PlacemarkDialog
+    private int placemarkType = LocationExtended.UNCATEGORIZED_AREA;
     private boolean isPlacemarkRequested;                        // True if the user requested to add a placemark (Annotation)
     private boolean isQuickPlacemarkRequest;                     // True if the user requested to add a placemark in a quick way (no annotation dialog)
     private boolean isRecording;                                 // True if the recording is active
@@ -215,6 +216,10 @@ public class GPSApplication extends Application implements LocationListener {
     private Track currentTrack = null;                           // The current track. Used for adding Trackpoints and Annotations
     private Track trackToEdit = null;                            // The Track that the user selected to edit with the "Track Properties" Dialog
 
+    public LocationExtended getCurrentPlacemark() {
+        return currentPlacemark;
+    }
+
     private final List<Track> arrayListTracks
             = Collections.synchronizedList(new ArrayList<Track>());             // The list of Tracks
 
@@ -235,6 +240,9 @@ public class GPSApplication extends Application implements LocationListener {
     public static GPSApplication getInstance(){
         return singleton;
     }
+
+    // ---------------------------------------------------------------------- getter/setters
+    public boolean getIsRecording() { return isRecording; }
 
     // ---------------------------------------------------------------------- Handlers and Runnables
 
@@ -640,6 +648,8 @@ public class GPSApplication extends Application implements LocationListener {
         EventBus.getDefault().post(EventBusMSG.UPDATE_TRACK);
         if (isRecording) addPreferenceFlag_NoBackup(FLAG_RECORDING);
         else clearPreferenceFlag_NoBackup(FLAG_RECORDING);
+
+        EventBus.getDefault().post(isRecording ? EventBusMSG.START_RECORDING : EventBusMSG.STOP_RECORDING);
     }
 
     public boolean isPlacemarkRequested() { return isPlacemarkRequested; }
@@ -1198,6 +1208,7 @@ public class GPSApplication extends Application implements LocationListener {
             ast.taskType = TASK_ADDPLACEMARK;
             ast.location = currentPlacemark;
             currentPlacemark.setDescription(placemarkDescription);
+            currentPlacemark.setTypePlacemark(placemarkType);
             asyncTODOQueue.add(ast);
             return;
         }
@@ -1778,11 +1789,11 @@ public class GPSApplication extends Application implements LocationListener {
         prefEGM96AltitudeCorrection = preferences.getBoolean("prefEGM96AltitudeCorrection", false);
         prefAltitudeCorrection = Double.parseDouble(preferences.getString("prefAltitudeCorrection", "0"));
         Log.w("myApp", "[#] GPSApplication.java - Manual Correction set to " + prefAltitudeCorrection + " m");
-        prefExportKML = preferences.getBoolean("prefExportKML", true);
+        prefExportKML = preferences.getBoolean("prefExportKML", false);
         prefExportGPX = preferences.getBoolean("prefExportGPX", true);
         prefExportTXT = preferences.getBoolean("prefExportTXT", false);
         prefKMLAltitudeMode = Integer.parseInt(preferences.getString("prefKMLAltitudeMode", "1"));
-        prefGPXVersion = Integer.parseInt(preferences.getString("prefGPXVersion", "100"));               // Default value = v.1.0
+        prefGPXVersion = Integer.parseInt(preferences.getString("prefGPXVersion", "110"));               // Default value = v.1.1
         prefShowTrackStatsType = Integer.parseInt(preferences.getString("prefShowTrackStatsType", "0"));
         prefShowDirections = Integer.parseInt(preferences.getString("prefShowDirections", "0"));
 
@@ -1986,6 +1997,7 @@ public class GPSApplication extends Application implements LocationListener {
                 if (asyncTODO.taskType.equals(TASK_ADDPLACEMARK)) {
                     locationExtended = new LocationExtended(asyncTODO.location.getLocation());
                     locationExtended.setDescription(asyncTODO.location.getDescription());
+                    locationExtended.setTypePlacemark(asyncTODO.location.getTypePlacemark());
                     locationExtended.setNumberOfSatellites(asyncTODO.location.getNumberOfSatellites());
                     locationExtended.setNumberOfSatellitesUsedInFix(asyncTODO.location.getNumberOfSatellitesUsedInFix());
                     track.addPlacemark(locationExtended);

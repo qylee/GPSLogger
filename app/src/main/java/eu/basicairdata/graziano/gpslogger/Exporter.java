@@ -461,8 +461,11 @@ class Exporter extends Thread {
                             if (exportKML) {
                                 kmlBW.write("  <Placemark id=\"" + placemark_id + "\">" + newLine);
                                 kmlBW.write("   <name>");
-                                kmlBW.write(stringToXML(loc.getDescription()));
+                                kmlBW.write(stringToXML(String.valueOf(loc.getTypePlacemark())));
                                 kmlBW.write("</name>" + newLine);
+                                kmlBW.write("   <description>");
+                                kmlBW.write(stringToXML(loc.getDescription()));
+                                kmlBW.write("</description>" + newLine);
                                 kmlBW.write("   <styleUrl>#PlacemarkStyle</styleUrl>" + newLine);
                                 kmlBW.write("   <Point>" + newLine);
                                 kmlBW.write("    <altitudeMode>" + (getPrefKMLAltitudeMode == 1 ? "clampToGround" : "absolute") + "</altitudeMode>" + newLine);
@@ -493,8 +496,12 @@ class Exporter extends Thread {
                                         dfdtGPX.format(loc.getLocation().getTime()));
                                 gpxBW.write("</time>");
                                 gpxBW.write("<name>");     // Name
-                                gpxBW.write(stringToXML(loc.getDescription()));
+                                gpxBW.write(stringToXML(String.valueOf(loc.getTypePlacemark())));
                                 gpxBW.write("</name>");
+                                gpxBW.write("<desc>");     // Description
+                                gpxBW.write(stringToXML(loc.getDescription()));
+                                gpxBW.write("</desc>");
+
                                 if (loc.getNumberOfSatellitesUsedInFix() > 0) {     // Satellites used in fix
                                     gpxBW.write("<sat>");
                                     gpxBW.write(String.valueOf(loc.getNumberOfSatellitesUsedInFix()));

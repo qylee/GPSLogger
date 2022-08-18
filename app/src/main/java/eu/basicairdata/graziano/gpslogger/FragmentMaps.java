@@ -8,11 +8,9 @@ import androidx.fragment.app.Fragment;
 import android.Manifest;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.RelativeLayout;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -20,18 +18,24 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.UiSettings;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class FragmentMaps extends Fragment {
-    final GPSApplication gpsApp = GPSApplication.getInstance();
     private GoogleMap googleMap;
     private final LatLng cityHallAnsan = new LatLng(37.3218, 126.8309);
     private final float defaultZoomLevel = 15.0f;
     private final float recordingZoomLevel = 19.0f;
     private LatLng lastPos = cityHallAnsan;
+    private Map<LocationExtended, Marker> markerList = new HashMap<>();
 
     private final OnMapReadyCallback callback = new OnMapReadyCallback() {
 
@@ -58,6 +62,7 @@ public class FragmentMaps extends Fragment {
             } else {
                 gpsActivity.checkLocationPermission();
             }
+            updatePlacemarks();
         }
     };
 
@@ -77,7 +82,7 @@ public class FragmentMaps extends Fragment {
         if (!EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().register(this);
         }
-
+        updatePlacemarks();
         update();
     }
 
@@ -86,6 +91,7 @@ public class FragmentMaps extends Fragment {
         if (EventBus.getDefault().isRegistered(this)) {
             EventBus.getDefault().unregister(this);
         }
+        clearPlacemarks();
         super.onPause();
     }
 
@@ -96,6 +102,13 @@ public class FragmentMaps extends Fragment {
     public void onEvent(Short msg) {
         if (msg == EventBusMSG.UPDATE_TRACK) {
             update();
+        } else if (msg == EventBusMSG.ADD_PLACEMARK) {
+            LocationExtended currentPlacemark = GPSApplication.getInstance().getCurrentPlacemark();
+            addPlacemark(currentPlacemark);
+        } else if (msg == EventBusMSG.FINALIZE_TRACK || msg == EventBusMSG.STOP_RECORDING) {
+            clearPlacemarks();
+        } else if (msg == EventBusMSG.START_RECORDING) {
+            updatePlacemarks();
         }
     }
 
@@ -114,12 +127,45 @@ public class FragmentMaps extends Fragment {
      * It takes care of visibility and value of each tile, and Track Status widgets.
      */
     public void update() {
-        Track track = gpsApp.getCurrentTrack();
+        Track track = GPSApplication.getInstance().getCurrentTrack();
         if (track.isValid()) {
             lastPos = new LatLng(track.getLatitudeEnd(), track.getLongitudeEnd());
         }
         if (googleMap != null) {
             googleMap.animateCamera(CameraUpdateFactory.newLatLngZoom(lastPos, recordingZoomLevel));
         }
+    }
+
+    private void clearPlacemarks() {
+        // clear all markers
+        for (Marker marker: markerList.values()) {
+            marker.remove();
+        }
+        markerList.clear();
+    }
+
+    private void updatePlacemarks() {
+        GPSApplication app = GPSApplication.getInstance();
+        if (app.getIsRecording()) {
+            Track track = app.getCurrentTrack();
+            if (track.isValid()) {
+                List<LocationExtended> placemarkList = app.gpsDataBase.getPlacemarksList(track.getId(), 0, 1500);
+                for (LocationExtended placemark: placemarkList) {
+                    markerList.put(placemark,
+                            googleMap.addMarker(new MarkerOptions()
+                                    .position(new LatLng(placemark.getLatitude(), placemark.getLongitude()))
+                                    .title(placemark.getDescription()))
+                    );
+                }
+            }
+        }
+    }
+
+    private void addPlacemark(LocationExtended placemark) {
+        markerList.put(placemark,
+                googleMap.addMarker(new MarkerOptions()
+                        .position(new LatLng(placemark.getLatitude(), placemark.getLongitude()))
+                        .title(placemark.getDescription()))
+        );
     }
 }

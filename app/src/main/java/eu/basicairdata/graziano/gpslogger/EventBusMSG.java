@@ -52,4 +52,8 @@ public class EventBusMSG {
     static final short ACTION_BULK_SHARE_TRACKS         =  43;  // Share the selected tracks
     static final short TRACKLIST_RANGE_SELECTION        =  44;  // Select/Deselect a range of tracks
     static final short ACTION_EDIT_TRACK                =  45;  // Edit the selected track
+
+    static final short FINALIZE_TRACK                   = 50;   // finalize tracking.
+    static final short START_RECORDING                  = 51;   // Start tracking.
+    static final short STOP_RECORDING                   = 52;   // Stop tracking.
 }
