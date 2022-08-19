@@ -29,7 +29,6 @@
         <activity
             android:name=".GPSActivity"
             android:exported="true"
-            android:launchMode="singleTask"
             android:windowSoftInputMode="adjustPan">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -41,7 +40,6 @@
             android:name=".SettingsActivity"
             android:configChanges="orientation|screenSize"
             android:label="@string/menu_settings"
-            android:launchMode="singleTask"
             android:theme="@style/MySettingsTheme"
             android:windowSoftInputMode="adjustPan">
             <meta-data

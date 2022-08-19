@@ -248,6 +248,7 @@
     <string name="pedestrian_road">Pedestrian Road</string>
     <string name="subway_station_area">Subway Station Area</string>
     <string name="edge_high_area">Edge High Area</string>
+    <string name="key_placemark">key_palcemark</string>
 
 
 </resources>

@@ -85,8 +85,10 @@ import static eu.basicairdata.graziano.gpslogger.GPSApplication.TOAST_VERTICAL_O
  */
 public class GPSActivity extends AppCompatActivity {
 
+    public static final String TAG = "GPSActivity";
     private static final int REQUEST_ID_MULTIPLE_PERMISSIONS = 1;
     private static final int REQUEST_ACTION_OPEN_DOCUMENT_TREE = 2;
+    private static final int REQUEST_ACTION_PLACEMARK = 3;
 
     private final GPSApplication gpsApp = GPSApplication.getInstance();
     private Toolbar toolbar;
@@ -432,7 +434,8 @@ public class GPSActivity extends AppCompatActivity {
         switch (msg) {
             case EventBusMSG.REQUEST_ADD_PLACEMARK:
                 Intent intent = new Intent(this, PlacemarkChoiceActivity.class);
-                startActivity(intent);
+                //startActivity(intent);
+                startActivityForResult(intent, REQUEST_ACTION_PLACEMARK);
 
                 // Shows the Placemark Dialog
 //                FragmentManager fm = getSupportFragmentManager();
@@ -678,7 +681,20 @@ public class GPSActivity extends AppCompatActivity {
     @Override
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
-        if (requestCode == REQUEST_ACTION_OPEN_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
+        Log.d(TAG, "initActivityResult.onActivityResult:" + requestCode + "," + resultCode);
+        if (requestCode == REQUEST_ACTION_PLACEMARK && resultCode == Activity.RESULT_OK){
+            PlacemarkItem place = null;
+            if (resultData != null) {
+                place = (PlacemarkItem) resultData.getParcelableExtra(getString(R.string.key_placemark));
+            }
+            Log.d(TAG, "place:" + place);
+
+            if (toast != null) toast.cancel();
+            toast = Toast.makeText(gpsApp.getApplicationContext(), "place:" + place, Toast.LENGTH_LONG);
+            toast.setGravity(Gravity.BOTTOM, 0, TOAST_VERTICAL_OFFSET);
+            toast.show();
+        }
+        else if (requestCode == REQUEST_ACTION_OPEN_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
             // The result data contains a URI for the document or directory that
             // the user selected.
 

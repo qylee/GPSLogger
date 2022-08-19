@@ -2,12 +2,15 @@ package eu.basicairdata.graziano.gpslogger;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.ListView;
 
 import java.util.ArrayList;
 
 public class PlacemarkChoiceActivity extends AppCompatActivity {
+    public static final String TAG = "PlacemarkChoiceActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,5 +33,13 @@ public class PlacemarkChoiceActivity extends AppCompatActivity {
         PlacemarksListViewAdapter adapter = new PlacemarksListViewAdapter(items, getApplicationContext());
 
         listView.setAdapter(adapter);
+
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(getBaseContext(), GPSActivity.class);
+            intent.putExtra(getString(R.string.key_placemark), items.get(i));
+            Log.d(TAG, items.get(i).toString());
+            setResult(RESULT_OK, intent);
+            finish();
+        });
     }
 }
