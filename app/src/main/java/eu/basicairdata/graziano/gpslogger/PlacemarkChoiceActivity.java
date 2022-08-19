@@ -1,10 +1,13 @@
 package eu.basicairdata.graziano.gpslogger;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
+import androidx.preference.PreferenceManager;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
 import android.widget.ListView;
 
 import java.util.ArrayList;
@@ -14,6 +17,12 @@ public class PlacemarkChoiceActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        AppCompatDelegate.setCompatVectorFromResourcesEnabled(true);
+        Log.w("myApp", "[#] " + this + " - onCreate()");
+
+        AppCompatDelegate.setDefaultNightMode(Integer.valueOf(PreferenceManager.getDefaultSharedPreferences(getApplicationContext()).getString("prefColorTheme", "2")));
+        setTitle(R.string.annotations);
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_placemark_choice);
 
@@ -30,7 +39,7 @@ public class PlacemarkChoiceActivity extends AppCompatActivity {
         items.add(new PlacemarkItem("지하철역 주변구역", "지하철 출입구역입니다.", LocationExtended.SUBWAY_STATION_AREA));
         items.add(new PlacemarkItem("보도 단차 지점", "보도 단차가 있는 지점입니다..", LocationExtended.EDGE_HIGH_AREA));
 
-        PlacemarksListViewAdapter adapter = new PlacemarksListViewAdapter(items, getApplicationContext());
+        PlacemarksListViewAdapter adapter = new PlacemarksListViewAdapter(items, getBaseContext());
 
         listView.setAdapter(adapter);
 

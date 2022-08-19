@@ -9,6 +9,8 @@
     <ListView
         android:id="@+id/id_placemarks_list"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+        android:divider="@color/colorBackground"
+        />
 
 </LinearLayout>
