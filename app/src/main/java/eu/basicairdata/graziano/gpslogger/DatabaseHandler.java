@@ -89,7 +89,7 @@ class DatabaseHandler extends SQLiteOpenHelper {
 
     // ---------------------------------------------------------------------------- Placemarks adds
     private static final String KEY_LOCATION_NAME = "name";
-    private static final String KEY_PLACEMARK_TYPE = "ptype";
+    private static final String KEY_PLACEMARK_CATEGORY = "ptype";
 
     // ------------------------------------------------------------------ Track Table Columns names
     private static final String KEY_TRACK_NAME = "name";
@@ -233,7 +233,7 @@ class DatabaseHandler extends SQLiteOpenHelper {
                 + KEY_LOCATION_TYPE + " INTEGER,"                               // 11
                 + KEY_LOCATION_NAME + " TEXT,"                                  // 12
                 + KEY_LOCATION_NUMBEROFSATELLITESUSEDINFIX + " INTEGER,"        // 13
-                + KEY_PLACEMARK_TYPE + " INTEGER"  + ")";                        // 14
+                + KEY_PLACEMARK_CATEGORY + " INTEGER"  + ")";                        // 14
         db.execSQL(CREATE_PLACEMARKS_TABLE);
     }
 
@@ -476,7 +476,7 @@ class DatabaseHandler extends SQLiteOpenHelper {
         locvalues.put(KEY_LOCATION_NUMBEROFSATELLITES, placemark.getNumberOfSatellites());
         locvalues.put(KEY_LOCATION_TYPE, LOCATION_TYPE_PLACEMARK);
         locvalues.put(KEY_LOCATION_NAME, placemark.getDescription());
-        locvalues.put(KEY_PLACEMARK_TYPE, placemark.getTypePlacemark());
+        locvalues.put(KEY_PLACEMARK_CATEGORY, placemark.getPlacemarkCategory());
         locvalues.put(KEY_LOCATION_NUMBEROFSATELLITESUSEDINFIX, placemark.getNumberOfSatellitesUsedInFix());
 
         ContentValues trkvalues = new ContentValues();
@@ -725,7 +725,7 @@ class DatabaseHandler extends SQLiteOpenHelper {
                     extdloc.setNumberOfSatellites(cursor.getInt(10));
                     extdloc.setNumberOfSatellitesUsedInFix(cursor.getInt(13));
                     extdloc.setDescription(cursor.getString(12));
-                    extdloc.setTypePlacemark(cursor.getInt(14));
+                    extdloc.setPlacemarkCategory(cursor.getInt(14));
 
                     placemarkList.add(extdloc); // Add Location to list
                 } while (cursor.moveToNext());

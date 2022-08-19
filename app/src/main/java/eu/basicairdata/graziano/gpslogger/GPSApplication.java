@@ -1208,7 +1208,7 @@ public class GPSApplication extends Application implements LocationListener {
             ast.taskType = TASK_ADDPLACEMARK;
             ast.location = currentPlacemark;
             currentPlacemark.setDescription(placemarkDescription);
-            currentPlacemark.setTypePlacemark(placemarkType);
+            currentPlacemark.setPlacemarkCategory(placemarkType);
             asyncTODOQueue.add(ast);
             return;
         }
@@ -1997,7 +1997,7 @@ public class GPSApplication extends Application implements LocationListener {
                 if (asyncTODO.taskType.equals(TASK_ADDPLACEMARK)) {
                     locationExtended = new LocationExtended(asyncTODO.location.getLocation());
                     locationExtended.setDescription(asyncTODO.location.getDescription());
-                    locationExtended.setTypePlacemark(asyncTODO.location.getTypePlacemark());
+                    locationExtended.setPlacemarkCategory(asyncTODO.location.getPlacemarkCategory());
                     locationExtended.setNumberOfSatellites(asyncTODO.location.getNumberOfSatellites());
                     locationExtended.setNumberOfSatellitesUsedInFix(asyncTODO.location.getNumberOfSatellitesUsedInFix());
                     track.addPlacemark(locationExtended);

@@ -42,7 +42,7 @@ public class LocationExtended {
 
     private Location location;
     private String description              = "";
-    private int typePlaceMark               = UNCATEGORIZED_AREA;
+    private int placemarkCategory           = UNCATEGORIZED_AREA;
     private double altitudeEGM96Correction  = NOT_AVAILABLE;
     private int numberOfSatellites          = NOT_AVAILABLE;
     private int numberOfSatellitesUsedInFix = NOT_AVAILABLE;
@@ -80,11 +80,11 @@ public class LocationExtended {
 
     public long getTime() { return location.getTime(); }
 
-    public void setTypePlacemark(int type) {
-        this.typePlaceMark = type;
+    public void setPlacemarkCategory(int category) {
+        this.placemarkCategory = category;
     }
 
-    public int getTypePlacemark() { return typePlaceMark; }
+    public int getPlacemarkCategory() { return placemarkCategory; }
 
     public String getDescription() { return description; }
 

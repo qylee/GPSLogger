@@ -461,7 +461,7 @@ class Exporter extends Thread {
                             if (exportKML) {
                                 kmlBW.write("  <Placemark id=\"" + placemark_id + "\">" + newLine);
                                 kmlBW.write("   <name>");
-                                kmlBW.write(stringToXML(String.valueOf(loc.getTypePlacemark())));
+                                kmlBW.write(stringToXML(String.valueOf(loc.getPlacemarkCategory())));
                                 kmlBW.write("</name>" + newLine);
                                 kmlBW.write("   <description>");
                                 kmlBW.write(stringToXML(loc.getDescription()));
@@ -496,7 +496,7 @@ class Exporter extends Thread {
                                         dfdtGPX.format(loc.getLocation().getTime()));
                                 gpxBW.write("</time>");
                                 gpxBW.write("<name>");     // Name
-                                gpxBW.write(stringToXML(String.valueOf(loc.getTypePlacemark())));
+                                gpxBW.write(stringToXML(String.valueOf(loc.getPlacemarkCategory())));
                                 gpxBW.write("</name>");
                                 gpxBW.write("<desc>");     // Description
                                 gpxBW.write(stringToXML(loc.getDescription()));
