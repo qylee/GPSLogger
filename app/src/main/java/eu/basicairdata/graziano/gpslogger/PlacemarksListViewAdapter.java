@@ -46,7 +46,7 @@ public class PlacemarksListViewAdapter extends BaseAdapter {
         tv_gender.setText(itemList.get(i).description);
 
         TextView tv_phone = view.findViewById(R.id.textview_type);
-        tv_phone.setText(itemList.get(i).type + "");
+        tv_phone.setText(itemList.get(i).getCategory() + "");
 
         return view;
     }

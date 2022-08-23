@@ -199,8 +199,7 @@ public class GPSActivity extends AppCompatActivity {
                         dialog.dismiss();
                     }
                 });
-            }
-            else builder.setMessage(getResources().getString(R.string.dlg_app_killed));
+            } else builder.setMessage(getResources().getString(R.string.dlg_app_killed));
             builder.setIcon(android.R.drawable.ic_menu_info_details);
             builder.setPositiveButton(R.string.about_ok, new DialogInterface.OnClickListener() {
                 public void onClick(DialogInterface dialog, int id) {
@@ -371,7 +370,8 @@ public class GPSActivity extends AppCompatActivity {
                 Map<String, Integer> perms = new HashMap<>();
                 if (grantResults.length > 0) {
                     // Fill with actual results from user
-                    for (int i = 0; i < permissions.length; i++) perms.put(permissions[i], grantResults[i]);
+                    for (int i = 0; i < permissions.length; i++)
+                        perms.put(permissions[i], grantResults[i]);
                     // Check for permissions
                     if (perms.containsKey(Manifest.permission.ACCESS_FINE_LOCATION)) {
                         if (perms.get(Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
@@ -434,13 +434,7 @@ public class GPSActivity extends AppCompatActivity {
         switch (msg) {
             case EventBusMSG.REQUEST_ADD_PLACEMARK:
                 Intent intent = new Intent(this, PlacemarkChoiceActivity.class);
-                //startActivity(intent);
                 startActivityForResult(intent, REQUEST_ACTION_PLACEMARK);
-
-                // Shows the Placemark Dialog
-//                FragmentManager fm = getSupportFragmentManager();
-//                FragmentPlacemarkDialog placemarkDialog = new FragmentPlacemarkDialog();
-//                placemarkDialog.show(fm, "");
                 break;
             case EventBusMSG.UPDATE_TRACKLIST:
             case EventBusMSG.NOTIFY_TRACKS_DELETED:
@@ -517,7 +511,7 @@ public class GPSActivity extends AppCompatActivity {
             bottomSheetBehavior.setPeekHeight(bottomSheet.getHeight());
         } else {
             bottomSheetBehavior.setPeekHeight(1);
-            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED) ;
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
         }
     }
 
@@ -571,7 +565,8 @@ public class GPSActivity extends AppCompatActivity {
      */
     private void loadPreferences() {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        if (preferences.getBoolean("prefKeepScreenOn", true)) getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
+        if (preferences.getBoolean("prefKeepScreenOn", true))
+            getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
         else getWindow().clearFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON);
     }
 
@@ -640,9 +635,11 @@ public class GPSActivity extends AppCompatActivity {
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if ((gpsApp.getNumberOfSelectedTracks() > 0) && (gpsApp.getGPSActivityActiveTab()  == 3)) {
-                    if (actionMode == null) actionMode = (startSupportActionMode(new ToolbarActionMode()));
-                    if (actionMode != null) actionMode.setTitle(gpsApp.getNumberOfSelectedTracks() > 1 ? String.valueOf(gpsApp.getNumberOfSelectedTracks()) : "");
+                if ((gpsApp.getNumberOfSelectedTracks() > 0) && (gpsApp.getGPSActivityActiveTab() == 3)) {
+                    if (actionMode == null)
+                        actionMode = (startSupportActionMode(new ToolbarActionMode()));
+                    if (actionMode != null)
+                        actionMode.setTitle(gpsApp.getNumberOfSelectedTracks() > 1 ? String.valueOf(gpsApp.getNumberOfSelectedTracks()) : "");
                 } else if (actionMode != null) {
                     actionMode.finish();
                     actionMode = null;
@@ -669,7 +666,7 @@ public class GPSActivity extends AppCompatActivity {
                 List<String> listPermissionsNeeded = new ArrayList<>();
                 listPermissionsNeeded.add(Manifest.permission.ACCESS_COARSE_LOCATION);
                 listPermissionsNeeded.add(Manifest.permission.ACCESS_FINE_LOCATION);
-                ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]) , REQUEST_ID_MULTIPLE_PERMISSIONS);
+                ActivityCompat.requestPermissions(this, listPermissionsNeeded.toArray(new String[listPermissionsNeeded.size()]), REQUEST_ID_MULTIPLE_PERMISSIONS);
             }
         }
     }
@@ -682,19 +679,13 @@ public class GPSActivity extends AppCompatActivity {
     @RequiresApi(api = Build.VERSION_CODES.LOLLIPOP)
     public void onActivityResult(int requestCode, int resultCode, Intent resultData) {
         Log.d(TAG, "initActivityResult.onActivityResult:" + requestCode + "," + resultCode);
-        if (requestCode == REQUEST_ACTION_PLACEMARK && resultCode == Activity.RESULT_OK){
+        if (requestCode == REQUEST_ACTION_PLACEMARK && resultCode == Activity.RESULT_OK) {
             PlacemarkItem place = null;
             if (resultData != null) {
                 place = (PlacemarkItem) resultData.getParcelableExtra(getString(R.string.key_placemark));
             }
             Log.d(TAG, "place:" + place);
-
-            if (toast != null) toast.cancel();
-            toast = Toast.makeText(gpsApp.getApplicationContext(), "place:" + place, Toast.LENGTH_LONG);
-            toast.setGravity(Gravity.BOTTOM, 0, TOAST_VERTICAL_OFFSET);
-            toast.show();
-        }
-        else if (requestCode == REQUEST_ACTION_OPEN_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == REQUEST_ACTION_OPEN_DOCUMENT_TREE && resultCode == Activity.RESULT_OK) {
             // The result data contains a URI for the document or directory that
             // the user selected.
 

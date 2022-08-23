@@ -190,7 +190,7 @@ public class GPSApplication extends Application implements LocationListener {
     DatabaseHandler gpsDataBase;                                 // The handler for the GPSLogger Database of Tracks
 
     private String placemarkDescription = "";                    // The description of the Placemark (annotation) set by PlacemarkDialog
-    private int placemarkType = LocationExtended.UNCATEGORIZED_AREA;
+    private int placemarkCategory = LocationExtended.UNCATEGORIZED_AREA;    // the category of the Placemark (annotation) set by PlacemarkDialog
     private boolean isPlacemarkRequested;                        // True if the user requested to add a placemark (Annotation)
     private boolean isQuickPlacemarkRequest;                     // True if the user requested to add a placemark in a quick way (no annotation dialog)
     private boolean isRecording;                                 // True if the recording is active
@@ -622,8 +622,12 @@ public class GPSApplication extends Application implements LocationListener {
         return currentLocationExtended;
     }
 
-    public void setPlacemarkDescription(String Description) {
-        this.placemarkDescription = Description;
+    public void setPlacemarkDescription(String description) {
+        this.placemarkDescription = description;
+    }
+
+    public void setPlacemarkCategory(int category) {
+        this.placemarkCategory = category;
     }
 
     public Track getCurrentTrack() {
@@ -1208,7 +1212,7 @@ public class GPSApplication extends Application implements LocationListener {
             ast.taskType = TASK_ADDPLACEMARK;
             ast.location = currentPlacemark;
             currentPlacemark.setDescription(placemarkDescription);
-            currentPlacemark.setPlacemarkCategory(placemarkType);
+            currentPlacemark.setPlacemarkCategory(placemarkCategory);
             asyncTODOQueue.add(ast);
             return;
         }

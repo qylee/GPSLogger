@@ -21,15 +21,19 @@
 
 package eu.basicairdata.graziano.gpslogger;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.DialogFragment;
 import androidx.appcompat.app.AlertDialog;
+
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -38,12 +42,21 @@ import android.widget.EditText;
 
 import org.greenrobot.eventbus.EventBus;
 
+import static android.app.Activity.RESULT_OK;
+
 /**
  * The dialog that appears when the user adds a new Annotation (Placemark).
  */
 public class FragmentPlacemarkDialog extends DialogFragment {
 
     EditText etDescription;
+    Activity activity;
+    PlacemarkItem item;
+
+    public FragmentPlacemarkDialog(Activity activity, PlacemarkItem item) {
+        this.activity = activity;
+        this.item = item;
+    }
 
     //@SuppressLint("InflateParams")
     @NonNull
@@ -78,8 +91,14 @@ public class FragmentPlacemarkDialog extends DialogFragment {
                             String placemarkDescription = etDescription.getText().toString();
                             final GPSApplication gpsApp = GPSApplication.getInstance();
                             gpsApp.setPlacemarkDescription(placemarkDescription.trim());
+                            gpsApp.setPlacemarkCategory(item.getCategory());
                             EventBus.getDefault().post(EventBusMSG.ADD_PLACEMARK);
                             //Log.w("myApp", "[#] FragmentPlacemarkDialog.java - posted ADD_PLACEMARK: " + placemarkDescription);
+
+                            Intent intent = new Intent(activity.getBaseContext(), GPSActivity.class);
+                            intent.putExtra(getString(R.string.key_placemark), item);
+                            activity.setResult(RESULT_OK, intent);
+                            activity.finish();
                         }
                     }
                 })
