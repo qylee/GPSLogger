@@ -42,11 +42,11 @@ public class PlacemarksListViewAdapter extends BaseAdapter {
         TextView tv_name = view.findViewById(R.id.textview_name);
         tv_name.setText(itemList.get(i).name);
 
-        TextView tv_gender = view.findViewById(R.id.textview_description);
-        tv_gender.setText(itemList.get(i).description);
+        TextView tv_description = view.findViewById(R.id.textview_description);
+        tv_description.setText(itemList.get(i).description);
 
-        TextView tv_phone = view.findViewById(R.id.textview_type);
-        tv_phone.setText(itemList.get(i).getCategory() + "");
+        TextView tv_category = view.findViewById(R.id.textview_category);
+        tv_category.setText(Integer.toString(itemList.get(i).category));
 
         return view;
     }
