@@ -68,6 +68,7 @@ android {
     lint {
         abortOnError false
     }
+    namespace 'eu.basicairdata.graziano.gpslogger'
 }
 
 dependencies {
